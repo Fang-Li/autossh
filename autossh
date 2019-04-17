@@ -86,8 +86,9 @@ for server in $AUTO_SSH_CONFIG; do
             echo '} WINCH' >> $FILE
         	echo "spawn ssh -p$PORT -l "$NAME $IP >> $FILE
         	if [ "$PASS" != "" ]; then
-	        	echo 'expect "password:"' >> $FILE
-	        	echo 'send   '$PASS"\r" >> $FILE
+	        		echo 'expect {' >>$FILE
+				echo '"password:" {send   '$PASS"\r"'}' >> $FILE
+				echo '"#" interact}' >> $FILE
 				if [ "$2" == 'sudo' ]; then
 					echo 'expect "@"' >> $FILE
 					echo 'send   "sudo su\r"' >> $FILE
